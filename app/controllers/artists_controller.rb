@@ -1,5 +1,5 @@
 class ArtistsController < ApplicationController
- before_action :authenticate_user!, only: [:new, :show]
+ before_action :authenticate_user!, only: [:new, :show,:index]
   before_action :find_artist, except: [:new , :index , :create] 
  
     def show
@@ -27,19 +27,16 @@ class ArtistsController < ApplicationController
   end
 end
     def edit
-  @artist = Artist.find(params[:id])
-end
-def update
-  artist = Artist.find(params[:id])
-  artist.update(person_params)
-	
-  redirect_to artist
-end
-def destroy
-  Artist.find(params[:id]).destroy
-
-  redirect_to artists_path
-end
+      @artist
+    end
+    def update
+      @artist.update(person_params)
+      redirect_to artists_path
+    end
+    def destroy
+      @artist.delete
+      redirect_to artists_path
+    end
 private
     
     def person_params
