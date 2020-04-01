@@ -1,16 +1,18 @@
 class ArtistsController < ApplicationController
  before_action :authenticate_user!, only: [:new, :show]
   before_action :find_artist, except: [:new , :index , :create] 
-    def index
-        @artists = Artist.all
-    end
+ 
     def show
         @artist = Artist.find(params[:id])
         @songs = @artist.songs
         if @artist.user != current_user
         flash[:notice] = 'Not allowed!'
-        redirect_to todos_path
+        redirect_to artists_path
      end
+    end
+       def index
+        # @artists = current_user.Artist.all
+        @artists = current_user.artists.all
     end
     def  new
       @artist = Artist.new
